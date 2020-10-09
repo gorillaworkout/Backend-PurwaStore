@@ -1,8 +1,8 @@
-const express=require('express')
-const app  = express()
-const bodyParser=require('body-parser')
-const cors = require('cors')
-const bearerToken = require('express-bearer-token')
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
+const cors=require('cors')
+const bearerToken=require('express-bearer-token')
 require('dotenv').config()
 
 app.use(cors())
@@ -17,7 +17,10 @@ app.get('/',(req,res)=>{
     }
     res.send(`<h1> selamat dataang jancok </h1>`)
 })
-// const {ProductRoutes} =require('./Routes')
+// const {ProductRoutes} = require('./Routes')
+const {ProductRoutes} =require('./Routes')
+
+app.use('/product',ProductRoutes)
 
 app.listen(5001,()=>console.log(`port Active`))
 
