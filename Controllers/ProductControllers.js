@@ -56,6 +56,7 @@ module.exports={
         })
     },
 
+
     getProductById:(req,res)=>{
         var {id}=req.params
         let sql=`select * from Products where id=${id}`
@@ -63,7 +64,72 @@ module.exports={
             if(err) return res.status(500).send(err)
             return res.status(200).send(resultProduct)
         })
-    }
+    },
 
+
+    // batas
+
+    deleteProduct: (req, res)=>{
+        const {id} = req.params
+        let sql = `Select * from Products where id = ${db.escape(id)}`
+        db.query(sql, (err, dataProduct)=>{
+            if(err)return res.status(500).send(err)
+            if(dataProduct.length){
+                sql = `delete from Products where id = ${db.escape(id)}`
+                db.query(sql, (err)=>{
+                    if(err)return res.status(500).send(err)
+
+                    sql = `Select * from Products`
+                    db.query(sql, (err, allProducts)=>{
+                        if(err)return res.status(500).send(err)
+                        return res.status(200).send(allProducts)
+                    })
+                })
+            }else{
+                return res.status(500).send('product tidak ada')
+            }
+        })
+    },
+
+    editProduct: (req, res)=>{
+        let data = req.body
+        const {id} = req.params
+        let sql = `Select * from Products where id = ${db.escape(id)}`
+        db.query(sql, (err, results)=>{
+            if(err)return res.status(500).send(err)
+
+            if(results.length){
+                sql = `Update Products set ? where id = ${db.escape(id)}`
+                console.log('sini')
+                db.query(sql, data, (err)=>{
+                    if(err)return res.status(500).send(err)
+                    console.log('asadaa')
+                    sql = `Select * from Products`
+                    db.query(sql, (err, allProducts)=>{
+                        if(err)return res.status(500).send(err)
+                        return res.status(200).send(allProducts)
+                    })
+                })
+            }else{
+                return res.status(500).send('product tidak ada')
+            }
+        })
+    },
+
+
+    addProduct:(req,res)=>{
+        let data = req.body
+        let sql = `insert into products set ?`
+            db.query(sql,data,(err)=>{
+                    if(err) return res.status(500).send(err)
+                    console.log('masuk dbad')
+                    sql = `select * from Products`
+                    db.query(sql,(err,results)=>{
+                        if(err)return res.status(500).send(err)
+                        return res.status(200).send(results)
+                    })
+            })
+    }
+            
 
 }
