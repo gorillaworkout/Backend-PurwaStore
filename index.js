@@ -18,9 +18,10 @@ app.get('/',(req,res)=>{
     res.send(`<h1> selamat dataang jancok </h1>`)
 })
 // const {ProductRoutes} = require('./Routes')
-const {ProductRoutes} =require('./Routes')
+const {ProductRoutes,CartRoutes} =require('./Routes')
 
 app.use('/product',ProductRoutes)
+app.use('/cart',CartRoutes)
 
 app.listen(5001,()=>console.log(`port Active`))
 
