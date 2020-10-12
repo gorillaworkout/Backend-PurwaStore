@@ -52,5 +52,44 @@ module.exports={
             })
 
         })
+    },
+
+    payment:(req,res)=>{
+        var data =req.body
+        var sql = `insert into Transactions set ?`
+        db.query(sql,data,(err,resultPayment)=>{
+            if(err) return res.status(500).send(err)
+            db.query(`Select * from Transactions`,(err,resultQuery)=>{
+                if(err)return res.status(500).send(err)
+                return res.status(200).send(resultQuery)
+            })
+        })
+    },
+
+    transactionDetails:(req,res)=>{
+        var data = req.body
+        var sql = `insert into TransactionDetails set ?`
+        db.query(sql,data,(err,resultTD)=>{
+            if(err) return res.status(500).send(err)
+            db.query(`Select * from TransactionDetails`,(err,results)=>{
+                if(err) return res.status(500).send(err)
+                return res.status(200).send(results)
+            })
+        })
+
+    },
+
+    deleteTransactionCart:(req,res)=>{
+        let {id} = req.params
+        let sql = `delete from Cart where userId=${id}`
+        db.query(sql,(err,result)=>{
+            if(err) return res.status(500).send(err)
+            db.query(`Select * from Cart`,(err,resultCart)=>{
+                if(err) return res.status(500).send(err)
+                return res.status(200).send(resultCart)
+            })
+        })
     }
+
+
 }
