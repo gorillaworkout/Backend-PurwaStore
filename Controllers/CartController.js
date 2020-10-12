@@ -59,7 +59,9 @@ module.exports={
         var sql = `insert into Transactions set ?`
         db.query(sql,data,(err,resultPayment)=>{
             if(err) return res.status(500).send(err)
-            db.query(`Select * from Transactions`,(err,resultQuery)=>{
+            // return res.status(200).send(resultPayment.data)
+            db.query(`select * from transactions
+                        order by id desc;`,(err,resultQuery)=>{
                 if(err)return res.status(500).send(err)
                 return res.status(200).send(resultQuery)
             })
