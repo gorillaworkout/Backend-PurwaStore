@@ -6,8 +6,27 @@ module.exports={
         let sql=`Select * from Products`
         db.query(sql,(err,dataProduct)=>{
             if(err) return res.status(500).send(err)
-            return res.status(200).send(dataProduct)
+             sql=`Select * from Products where merk ='Apple' limit 5`
+            db.query(sql,(err,dataApple)=>{
+                if(err) return res.status(500).send(err)
+                 sql=`Select * from Products where merk='Samsung' limit 5`
+                 db.query(sql,(err,dataSamsung)=>{
+                    if(err) return res.status(500).send(err)
+                    sql=`Select * from Products order by viewer desc limit 5`
+                    db.query(sql,(err,dataViewer)=>{
+                        if(err)return res.status(500).send(err)
+                        return res.status(200).send({
+                            dataProduct:dataProduct,
+                            dataApple,dataSamsung,dataViewer
+                        })
+                    })
+                })
+
+            })
+            
+
         })
+        
     },
 
     getAllApple:(req,res)=>{

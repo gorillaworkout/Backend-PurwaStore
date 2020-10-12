@@ -3,20 +3,16 @@ const {db}=require('./../Connection')
 module.exports={
 
       checkQtyById:(req,res)=>{
-          var {id,productId}=req.params
-        //   var data = {
-        //       "cart":{
-        //           "id":req.params.id,
-        //           "productId":req.params.productId
-        //       }
-        //   }
+        //   var {id,productId}=req.params
+          var {id,productId}= req.query
+        console.log(req.query)
           let sql=`select * from Cart c
           join Users u
           on u.id = c.UserId
           join products p 
           on p.id = c.ProductId
           where (u.id=${id} AND p.id = ${productId})`
-          db.query(sql,data,(err,resultAllQty)=>{
+          db.query(sql,(err,resultAllQty)=>{
               console.log(resultAllQty)
               if(err)return res.status(500).send(err)
               return res.status(200).send(resultAllQty)
@@ -29,10 +25,10 @@ module.exports={
         let sql =`
         select * from Cart c
         join Users u
-        on u.id = c.id
+        on u.id = c.UserId
         join products p 
         on p.id = c.ProductId
-        where u.id = ${id}`
+        where c.UserId = ${id}`
 
         db.query(sql,(err,resultQty)=>{
             console.log(resultQty)
