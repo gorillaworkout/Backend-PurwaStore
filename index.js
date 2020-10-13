@@ -19,10 +19,13 @@ app.get('/',(req,res)=>{
 })
 // const {ProductRoutes} = require('./Routes')
 const {ProductRoutes,CartRoutes, AdminRoutes} =require('./Routes')
+const { getProductById } = require('./Controllers/ProductControllers')
 
 app.use('/product',ProductRoutes)
 app.use('/cart',CartRoutes)
 app.use('/admin', AdminRoutes)
+
+
 
 app.listen(5001,()=>console.log(`port Active di 5001`))
 
