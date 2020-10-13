@@ -7,7 +7,9 @@ Router.get('/allQty/:id',CartControllers.getAllQty)
 Router.get('/getQtyById',CartControllers.checkQtyById) // ini nanti pake req.query
 Router.post('/addQty',CartControllers.addQty)
 Router.post('/addTransactions',CartControllers.payment)
-Router.post('/addTransactDetail',CartControllers.transactionDetails)
+Router.post('/addNewTransactions',CartControllers.newPayment)
+Router.post('/addNewTransactionsCC',CartControllers.paymentWithCC)
+Router.post('/addTransactDetail/:id',CartControllers.transactionDetails)
 Router.delete('/deleteCartTransact/:id',CartControllers.deleteTransactionCart)
 
 module.exports=Router
