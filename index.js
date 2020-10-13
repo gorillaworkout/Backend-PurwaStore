@@ -18,10 +18,11 @@ app.get('/',(req,res)=>{
     res.send(`<h1> selamat dataang jancok </h1>`)
 })
 // const {ProductRoutes} = require('./Routes')
-const {ProductRoutes,CartRoutes} =require('./Routes')
+const {ProductRoutes,CartRoutes, AdminRoutes} =require('./Routes')
 
 app.use('/product',ProductRoutes)
 app.use('/cart',CartRoutes)
+app.use('/admin', AdminRoutes)
 
 app.listen(5001,()=>console.log(`port Active di 5001`))
 
