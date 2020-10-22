@@ -7,5 +7,6 @@ module.exports={
     encrypt,
     Auth,
     jwt,
-    uploader
+    uploader,
+    transporter: require('./mailers')
 }

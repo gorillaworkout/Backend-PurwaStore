@@ -18,12 +18,13 @@ app.get('/',(req,res)=>{
     res.send(`<h1> selamat dataang jancok </h1>`)
 })
 // const {ProductRoutes} = require('./Routes')
-const {ProductRoutes,CartRoutes, AdminRoutes} =require('./Routes')
+const {ProductRoutes,CartRoutes, AdminRoutes, AuthRoutes} =require('./Routes')
 const { getProductById } = require('./Controllers/ProductControllers')
 
 app.use('/product',ProductRoutes)
 app.use('/cart',CartRoutes)
 app.use('/admin', AdminRoutes)
+app.use('/auth', AuthRoutes)
 
 
 
