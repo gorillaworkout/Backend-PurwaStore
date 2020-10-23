@@ -1,5 +1,5 @@
 const Router = require('express').Router()
-const { AdminRoutes } = require('.')
+// const { AdminRoutes } = require('./')
 const {AdminControllers} = require('./../Controllers')
 
 Router.get('/getAdminData', AdminControllers.getWaitingAdmin)
