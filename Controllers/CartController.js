@@ -94,89 +94,126 @@ module.exports={
         })
     },
 
-        paymentWithCC:(req,res)=>{
-            console.log(req.body)
-            var data ={
-                "status":"Completed",
-                "userId":req.body.userId,
-                "tanggalPembayaran":req.body.tanggalPembayaran,
-                "metode":"Credit Card",
-                "buktiPembayaran":req.body.buktiPembayaran
-            }
-            var sql = `insert into Transactions set ?`
-            db.query(sql,data,(err,resultPayment)=>{
-                console.log(resultPayment,'ini result payment')
-                if(err) return res.status(500).send(err)
+    paymentWithCC:(req,res)=>{
+        console.log(req.body)
+        var data ={
+            "status":"Completed",
+            "userId":req.body.userId,
+            "tanggalPembayaran":req.body.tanggalPembayaran,
+            "metode":"Credit Card",
+            "buktiPembayaran":req.body.buktiPembayaran
+        }
+        var sql = `insert into Transactions set ?`
+        db.query(sql,data,(err,resultPayment)=>{
+            console.log(resultPayment,'ini result payment')
+            if(err) return res.status(500).send(err)
 
-                sql="INSERT INTO TransactionDetails (transactionId, productId,price,qty) VALUES ?"
-                console.log(resultPayment.insertId,'ini RP insert ID')
-                var kosong = req.body.sqlCart.map((val,index)=>{
-                    console.log(val)
-                    return [
-                        resultPayment.insertId,
-                        val.ProductId,
-                        val.harga,
-                        val.Qty
-                    ]
-                })
-                console.log(kosong,'cart')
-                            db.query(sql,[kosong],(err,resultTD)=>{
-                                if(err) return res.status(500).send(err)
-                                      
-                                sql=`delete  from Cart where UserId=${req.body.userId}`
-                                db.query(sql,(err,resultDelete)=>{
-                                    if(err) return res.status(500).send(err)
-                                    console.log('success ')
-                                    return res.status(200).send('Success')
-                                    
-                                })
-                                // return res.status(200).send(resultTD)
-                            })                             
-
-                // return res.status(200).send(resultPayment)
+            sql="INSERT INTO TransactionDetails (transactionId, productId,price,qty) VALUES ?"
+            console.log(resultPayment.insertId,'ini RP insert ID')
+            var kosong = req.body.sqlCart.map((val,index)=>{
+                console.log(val)
+                return [
+                    resultPayment.insertId,
+                    val.ProductId,
+                    val.harga,
+                    val.Qty
+                ]
             })
+            console.log(kosong,'cart')
+                        db.query(sql,[kosong],(err,resultTD)=>{
+                            if(err) return res.status(500).send(err)
+                                    
+                            sql=`delete  from Cart where UserId=${req.body.userId}`
+                            db.query(sql,(err,resultDelete)=>{
+                                if(err) return res.status(500).send(err)
+                                console.log('success ')
+                                return res.status(200).send('Success')
+                                
+                            })
+                            // return res.status(200).send(resultTD)
+                        })                             
 
-        },
+            // return res.status(200).send(resultPayment)
+        })
+
+    },
 
     // values = [['john','high]]
-        newPayment:(req,res)=>{
-            console.log(req.body,'RB')
-            var data ={
-                "status":"Waiting Admin",
-                "userId":req.body.userId,
-                "tanggalPembayaran":req.body.tanggalPembayaran,
-                "metode":"upload",
-                "buktiPembayaran":req.body.buktiPembayaran
-            }
-
-                var sql = `insert into Transactions set ?`
-                db.query(sql,data,(err,resultPayment)=>{
-                    console.log(resultPayment,'RP123')
-                    if(err) return res.status(500).send(err)
-                    // return res.status(200).send(resultPayment.data)    
-                        sql="INSERT INTO TransactionDetails (transactionId, productId,price,qty) VALUES ?"
-                            console.log(resultPayment.insertId,'RP')
-                            var kosong = req.body.sqlCart.map((val,index)=>{
-                                return [
-                                    resultPayment.insertId,
-                                    val.ProductId,
-                                    val.harga,
-                                    val.Qty
-                                ]
-                            })
-                            console.log(kosong,'cart')
-                            db.query(sql,[kosong],(err,resultTD)=>{
-                                if(err) return res.status(500).send(err)
-                                      
-                                sql=`delete  from Cart where UserId=${req.body.userId}`
-                                db.query(sql,(err,resultDelete)=>{
-                                    if(err) return res.status(500).send(err)
-                                    return res.status(200).send('Success')
-                                })
-                                // return res.status(200).send(resultTD)
-                            })                             
-                })
+    newPayment:(req,res)=>{
+        console.log(req.body,'RB')
+        var data ={
+            "status":"Waiting Admin",
+            "userId":req.body.userId,
+            "tanggalPembayaran":req.body.tanggalPembayaran,
+            "metode":"upload",
+            "buktiPembayaran":req.body.buktiPembayaran
         }
+
+            var sql = `insert into Transactions set ?`
+            db.query(sql,data,(err,resultPayment)=>{
+                console.log(resultPayment,'RP123')
+                if(err) return res.status(500).send(err)
+                // return res.status(200).send(resultPayment.data)    
+                    sql="INSERT INTO TransactionDetails (transactionId, productId,price,qty) VALUES ?"
+                        console.log(resultPayment.insertId,'RP')
+                        var kosong = req.body.sqlCart.map((val,index)=>{
+                            return [
+                                resultPayment.insertId,
+                                val.ProductId,
+                                val.harga,
+                                val.Qty
+                            ]
+                        })
+                        console.log(kosong,'cart')
+                        db.query(sql,[kosong],(err,resultTD)=>{
+                            if(err) return res.status(500).send(err)
+                                    
+                            sql=`delete  from Cart where UserId=${req.body.userId}`
+                            db.query(sql,(err,resultDelete)=>{
+                                if(err) return res.status(500).send(err)
+                                return res.status(200).send('Success')
+                            })
+                            // return res.status(200).send(resultTD)
+                        })                             
+            })
+    },
+    updateQty: (req, res)=>{
+        const {iduser, idprod} = req.body
+        let sql = `select * from cart where UserId = ${db.escape(iduser)} and ProductId = ${db.escape(idprod)}`
+        db.query(sql, (err, datacart)=>{
+            if(err){
+                console.log(err)
+                return res.status(500).send(err)
+            } 
+            console.log(datacart[0].Qty, 'ini qty')
+            let dataupdate = {
+                Qty: datacart[0].Qty + 1
+            }
+            let sql = `Update cart set ? where UserId = ${db.escape(iduser)} and ProductId = ${db.escape(idprod)}`
+    
+            db.query(sql, dataupdate, (err)=>{
+                if(err){
+                    console.log(err)
+                    return res.status(500).send(err)
+                } 
+
+                let sql =`select * from Cart c join Users u on u.id = c.UserId join products p on p.id = c.ProductId where c.UserId = ${iduser}`
+
+                db.query(sql,(err,results)=>{
+                    // console.log(resultQty)
+                    // console.log(id)
+                    if(err){
+                        console.log(err)
+                        return res.status(500).send(err)
+                    }
+                    return res.status(200).send(results)
+                })
+
+            })
+
+        })
+        
+    }
     
 
 
