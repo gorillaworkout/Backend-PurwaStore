@@ -12,5 +12,6 @@ Router.post('/addNewTransactionsCC',CartControllers.paymentWithCC)
 Router.post('/addTransactDetail/:id',CartControllers.transactionDetails)
 Router.delete('/deleteCartTransact/:id',CartControllers.deleteTransactionCart)
 Router.post('/updateQtyCart', CartControllers.updateQty)
+Router.post('/changeAddress',CartControllers.changeAddress)
 
 module.exports=Router

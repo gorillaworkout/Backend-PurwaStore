@@ -213,6 +213,25 @@ module.exports={
 
         })
         
+    },
+    changeAddress:(req,res)=>{
+
+        const {userId,alamat} = req.body
+
+        let sql = `update Users set ? where id =${db.escape(userId)}`
+        let data ={
+            alamat:alamat
+        }
+        db.query(sql,data,(err)=>{
+            if(err)return res.status(500).send({message:err.message})
+            
+            sql=`select * from Users where  id=${db.escape(userId)}`
+            db.query(sql,(err,dataUser)=>{
+                if(err) return res.status(500).send({message:err.message})
+                return res.send(dataUser)
+            })
+            
+        })
     }
     
 

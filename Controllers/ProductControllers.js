@@ -15,6 +15,7 @@ module.exports={
                     sql=`Select * from Products order by viewer desc limit 5`
                     db.query(sql,(err,dataViewer)=>{
                         if(err)return res.status(500).send(err)
+                        
                         return res.status(200).send({
                             dataProduct:dataProduct,
                             dataApple,dataSamsung,dataViewer
