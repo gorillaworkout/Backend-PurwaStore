@@ -96,19 +96,24 @@ module.exports={
         const {id} = req.params
         let sql = `select * from users where id = ${db.escape(id)}`
         db.query(sql, (err, results)=>{
-            if(err) return res.status(500).send({message: err.message})
+            if(err){
+                console.log(err)
+                return res.status(500).send(err)
+            }
 
-            sql = `
-            select * from cart c
+            sql = `select * from cart c
             join users u
             on u.id = c.UserId
             join products p 
             on p.id = c.ProductId
             where c.UserId = ?`
 
-            db.query(sql, (err, cart)=>{
-                if(err) return res.status(500).send({message: err.message})
-
+            db.query(sql, [id], (err, cart)=>{
+                if(err){
+                    console.log(err)
+                    return res.status(500).send(err)
+                }
+                console.log({datalogin: results[0], cart})
                 return res.send({datalogin: results[0], cart})
             })
         })

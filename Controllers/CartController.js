@@ -120,18 +120,18 @@ module.exports={
                 ]
             })
             console.log(kosong,'cart')
-                        db.query(sql,[kosong],(err,resultTD)=>{
-                            if(err) return res.status(500).send(err)
-                                    
-                            sql=`delete  from cart where UserId=${req.body.userId}`
-                            db.query(sql,(err,resultDelete)=>{
-                                if(err) return res.status(500).send(err)
-                                console.log('success ')
-                                return res.status(200).send('Success')
-                                
-                            })
-                            // return res.status(200).send(resultTD)
-                        })                             
+            db.query(sql,[kosong],(err,resultTD)=>{
+                if(err) return res.status(500).send(err)
+                        
+                sql=`delete  from cart where UserId=${req.body.userId}`
+                db.query(sql,(err,resultDelete)=>{
+                    if(err) return res.status(500).send(err)
+                    console.log('success ')
+                    return res.status(200).send('Success')
+                    
+                })
+                // return res.status(200).send(resultTD)
+            })                             
 
             // return res.status(200).send(resultPayment)
         })
