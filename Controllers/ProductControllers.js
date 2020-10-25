@@ -3,19 +3,30 @@ const {db}=require('./../Connection')
 
 module.exports={
     getAllHomeProduct:(req,res)=>{
-        let sql=`Select * from Products`
+        let sql=`Select * from products`
         db.query(sql,(err,dataProduct)=>{
-            if(err) return res.status(500).send(err)
-             sql=`Select * from Products where merk ='Apple' limit 5`
+            if(err){
+                console.log(err)
+                return res.status(500).send(err)
+            } 
+             sql=`Select * from products where merk ='Apple' limit 5`
             db.query(sql,(err,dataApple)=>{
-                if(err) return res.status(500).send(err)
-                 sql=`Select * from Products where merk='Samsung' limit 5`
+                if(err){
+                    console.log(err)
+                    return res.status(500).send(err)
+                }
+                 sql=`Select * from products where merk='Samsung' limit 5`
                  db.query(sql,(err,dataSamsung)=>{
-                    if(err) return res.status(500).send(err)
-                    sql=`Select * from Products order by viewer desc limit 5`
+                    if(err){
+                        console.log(err)
+                        return res.status(500).send(err)
+                    }
+                    sql=`Select * from products order by viewer desc limit 5`
                     db.query(sql,(err,dataViewer)=>{
-                        if(err)return res.status(500).send(err)
-                        
+                        if(err){
+                            console.log(err)
+                            return res.status(500).send(err)
+                        }
                         return res.status(200).send({
                             dataProduct:dataProduct,
                             dataApple,dataSamsung,dataViewer
@@ -31,7 +42,7 @@ module.exports={
     },
 
     getAllApple:(req,res)=>{
-        let sql=`Select * from Products where merk ='Apple' limit 5`
+        let sql=`Select * from products where merk ='Apple' limit 5`
         db.query(sql,(err,dataApple)=>{
             if(err) return res.status(500).send(err)
             return res.status(200).send(dataApple)
@@ -43,14 +54,14 @@ module.exports={
         // })
     },
     getAllSamsung:(req,res)=>{
-        let sql=`Select * from Products where merk='Samsung' limit 5`
+        let sql=`Select * from products where merk='Samsung' limit 5`
         db.query(sql,(err,dataSamsung)=>{
             if(err) return res.status(500).send(err)
             return res.status(200).send(dataSamsung)
         })
     },
     getMostViewed:(req,res)=>{
-        let sql=`Select * from Products order by viewer desc limit 5`
+        let sql=`Select * from products order by viewer desc limit 5`
         db.query(sql,(err,dataViewer)=>{
             if(err)return res.status(500).send(err)
             return res.status(200).send(dataViewer)
@@ -60,7 +71,7 @@ module.exports={
 
     getProductById:(req,res)=>{
         var {id}=req.params
-        let sql=`select * from Products where id=${id}`
+        let sql=`select * from products where id=${id}`
         db.query(sql,(err,resultProduct)=>{
             if(err) return res.status(500).send(err)
             return res.status(200).send(resultProduct)
@@ -72,15 +83,15 @@ module.exports={
 
     deleteProduct: (req, res)=>{
         const {id} = req.params
-        let sql = `Select * from Products where id = ${db.escape(id)}`
+        let sql = `Select * from products where id = ${db.escape(id)}`
         db.query(sql, (err, dataProduct)=>{
             if(err)return res.status(500).send(err)
             if(dataProduct.length){
-                sql = `delete from Products where id = ${db.escape(id)}`
+                sql = `delete from products where id = ${db.escape(id)}`
                 db.query(sql, (err)=>{
                     if(err)return res.status(500).send(err)
 
-                    sql = `Select * from Products`
+                    sql = `Select * from products`
                     db.query(sql, (err, allProducts)=>{
                         if(err)return res.status(500).send(err)
                         return res.status(200).send(allProducts)
@@ -95,17 +106,17 @@ module.exports={
     editProduct: (req, res)=>{
         let data = req.body
         const {id} = req.params
-        let sql = `Select * from Products where id = ${db.escape(id)}`
+        let sql = `Select * from products where id = ${db.escape(id)}`
         db.query(sql, (err, results)=>{
             if(err)return res.status(500).send(err)
 
             if(results.length){
-                sql = `Update Products set ? where id = ${db.escape(id)}`
+                sql = `Update products set ? where id = ${db.escape(id)}`
                 console.log('sini')
                 db.query(sql, data, (err)=>{
                     if(err)return res.status(500).send(err)
                     console.log('asadaa')
-                    sql = `Select * from Products`
+                    sql = `Select * from products`
                     db.query(sql, (err, allProducts)=>{
                         if(err)return res.status(500).send(err)
                         return res.status(200).send(allProducts)
@@ -124,7 +135,7 @@ module.exports={
             db.query(sql,data,(err)=>{
                     if(err) return res.status(500).send(err)
                     console.log('masuk dbad')
-                    sql = `select * from Products`
+                    sql = `select * from products`
                     db.query(sql,(err,results)=>{
                         if(err)return res.status(500).send(err)
                         return res.status(200).send(results)

@@ -62,19 +62,27 @@ module.exports={
     Login: (req,res)=>{
         const {username, password} = req.body
         let sql = `select * from users where username = ? and password = ?`
+        console.log('aaa')
         db.query(sql, [username, password], (err, datausers)=>{
-            if(err) return res.status(500).send({message: err.message})
+            if(err){
+                console.log(err)
+                return res.status(500).send(err)
+            }
             if(!datausers.length) return res.status(500).send({message: 'user tidak terdaftar'})
             sql = `
-            select * from Cart c
-            join Users u
+            select * from cart c
+            join users u
             on u.id = c.UserId
             join products p 
             on p.id = c.ProductId
             where c.UserId = ?`
 
+            console.log('sdsd')
             db.query(sql,[datausers[0].id], (err,cart)=>{
-                if(err) return res.status(500).send({message: err.message})
+                if(err){
+                    console.log(err)
+                    return res.status(500).send(err)
+                } 
                 const token = createJWToken({id:datausers[0].id, username:datausers[0].username})
                 datausers[0].token = token
                 // datausers[0].cart = cart
@@ -88,9 +96,26 @@ module.exports={
         const {id} = req.params
         let sql = `select * from users where id = ${db.escape(id)}`
         db.query(sql, (err, results)=>{
-            if(err) return res.status(500).send({message: err.message})
+            if(err){
+                console.log(err)
+                return res.status(500).send(err)
+            }
 
-            return res.send(results)
+            sql = `select * from cart c
+            join users u
+            on u.id = c.UserId
+            join products p 
+            on p.id = c.ProductId
+            where c.UserId = ?`
+
+            db.query(sql, [id], (err, cart)=>{
+                if(err){
+                    console.log(err)
+                    return res.status(500).send(err)
+                }
+                console.log({datalogin: results[0], cart})
+                return res.send({datalogin: results[0], cart})
+            })
         })
     }
 }
