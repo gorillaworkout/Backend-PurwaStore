@@ -6,19 +6,17 @@ const bearerToken=require('express-bearer-token')
 const http = require('http')
 require('dotenv').config()
 
+const PORT = process.env.PORT || 5001
+
 app.use(cors())
 app.use(bearerToken())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.static('Public'))
 const server = http.createServer(app)
-const PORT = process.env.PORT || 5001
 
 app.get('/',(req,res)=>{
-    var dataku={
-        name:'ojan'
-    }
-    res.send(`<h1> selamat dataang jancok </h1>`)
+    res.send(`<h1> selamat dataang di PurwaStore </h1>`)
 })
 // const {ProductRoutes} = require('./Routes')
 const {ProductRoutes,CartRoutes, AdminRoutes, AuthRoutes} =require('./Routes')
