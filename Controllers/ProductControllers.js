@@ -1,5 +1,5 @@
 const fs=require('fs')
-const {db}=require('../connection')
+const {db}=require('../Connection')
 
 module.exports={
     getAllHomeProduct:(req,res)=>{

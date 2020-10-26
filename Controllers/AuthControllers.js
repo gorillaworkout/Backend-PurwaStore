@@ -1,4 +1,4 @@
-const {db} = require('../connection')
+const {db} = require('../Connection')
 const {encrypt, transporter} = require('./../helpers')
 const {createJWToken} = require('../helpers/jwt')
 const fs = require('fs')
