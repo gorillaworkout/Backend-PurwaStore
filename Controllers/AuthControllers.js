@@ -38,7 +38,7 @@ module.exports={
 
                         const token = createJWToken({id:userslogin[0].id, username: userslogin[0].username})
                         const link = `http://localhost:3000/verified?token=${token}`
-                        const htmlRender = fs.readFileSync('./template/email.html', 'utf8')
+                        const htmlRender = fs.readFileSync('./Template/email.html', 'utf8')
                         const template = handlebars.compile(htmlRender) // return function
                         const htmlEmail = template({name: userslogin[0].namaLengkap, link})
                         transporter.sendMail({
