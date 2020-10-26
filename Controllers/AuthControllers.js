@@ -44,7 +44,7 @@ module.exports={
                         transporter.sendMail({
                             from : 'OpenTrip <hannah4669@gmail.com>',
                             to: email,
-                            subject: 'beb confirm dong',
+                            subject: 'Welcome to PurwaStore',
                             html:htmlEmail
                         }).then(()=>{
                             userslogin[0].token = token
