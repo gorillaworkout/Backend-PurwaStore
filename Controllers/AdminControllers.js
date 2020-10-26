@@ -1,4 +1,4 @@
-const {db}=require('./../Connection')
+const {db}=require('../connection')
 
 module.exports = {
     getWaitingAdmin : (req, res)=>{
