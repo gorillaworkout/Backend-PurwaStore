@@ -2,9 +2,13 @@
   "name": "backend-purwastore",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "12.x"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,19 @@
   "bugs": {
     "url": "https://github.com/gorillaworkout/Backend-PurwaStore/issues"
   },
-  "homepage": "https://github.com/gorillaworkout/Backend-PurwaStore#readme"
+  "homepage": "https://github.com/gorillaworkout/Backend-PurwaStore#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "handlebars": "^4.7.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.2",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "mysqlw": "^0.13.6",
+    "nodemailer": "^6.4.13"
+  }
 }
