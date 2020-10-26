@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors=require('cors')
 const bearerToken=require('express-bearer-token')
-require('dotenv').config() //sdsdsd
+require('dotenv').config() // tesss
 
 const PORT = process.env.PORT || 5001
 
@@ -14,11 +14,10 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.static('Public'))
 
 app.get('/',(req,res)=>{
-    res.send(`<h1> WELCOME di PurwaStore </h1>`)
+    res.send(`<h1> WELCOME customer di PurwaStore </h1>`)
 })
 // const {ProductRoutes} = require('./Routes')
 const {ProductRoutes,CartRoutes, AdminRoutes, AuthRoutes} =require('./Routes')
-const { getProductById } = require('./Controllers/ProductControllers')
 
 app.use('/product',ProductRoutes)
 app.use('/cart',CartRoutes)
