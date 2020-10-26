@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors=require('cors')
 const bearerToken=require('express-bearer-token')
 const http = require('http')
-require('dotenv').config()
+require('dotenv').config() //sdsdsd
 
 const PORT = process.env.PORT || 5001
 
