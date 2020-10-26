@@ -16,7 +16,7 @@ app.use(express.static('Public'))
 const server = http.createServer(app)
 
 app.get('/',(req,res)=>{
-    res.send(`<h1> selamat dataang di PurwaStore </h1>`)
+    res.send(`<h1> WELCOME di PurwaStore </h1>`)
 })
 // const {ProductRoutes} = require('./Routes')
 const {ProductRoutes,CartRoutes, AdminRoutes, AuthRoutes} =require('./Routes')
