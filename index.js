@@ -33,5 +33,5 @@ app.use('/auth', AuthRoutes)
 //     console.log(`port Active di 5001`)
 // })
 
-server.listen(PORT, ()=>console.log('API aktif di Port: ', PORT))
+app.listen(PORT, ()=>console.log('API aktif di Port: ', PORT))
 
