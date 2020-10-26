@@ -3,7 +3,6 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors=require('cors')
 const bearerToken=require('express-bearer-token')
-const http = require('http')
 require('dotenv').config() //sdsdsd
 
 const PORT = process.env.PORT || 5001
@@ -13,7 +12,6 @@ app.use(bearerToken())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.static('Public'))
-const server = http.createServer(app)
 
 app.get('/',(req,res)=>{
     res.send(`<h1> WELCOME di PurwaStore </h1>`)
