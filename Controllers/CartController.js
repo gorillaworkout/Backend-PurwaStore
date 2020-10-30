@@ -215,9 +215,40 @@ module.exports={
         })
         
     },
+    changePhone:(req,res)=>{
+        const{userId,phone}= req.body
+        console.log(userId,' ini user id backend')
+        console.log(phone,' ini alamat backend')
+        let sql = `update Users set ? where id =${db.escape(userId)}`
+        let data ={
+            phone:phone
+        }
+        db.query(sql,data,(err)=>{
+            if(err)return res.status(500).send({message:err.message})
+
+            sql=`select * from cart c
+            join users u
+            on u.id = c.UserId
+            join products p 
+            on p.id = c.ProductId
+            where c.UserId =${db.escape(userId)}`
+
+            db.query(sql,(err,dataUser)=>{
+                console.log(userId)
+                console.log(dataUser, ' ini alamat baru')
+                // console.log('berhasil update alamat baru')
+                if(err) return res.status(500).send({message:err.message})
+                return res.send(dataUser)
+            })
+
+
+        })
+    },
     changeAddress:(req,res)=>{
 
         const {userId,alamat} = req.body
+        console.log(userId,' ini user id backend')
+        console.log(alamat,' ini alamat backend')
 
         let sql = `update Users set ? where id =${db.escape(userId)}`
         let data ={
@@ -226,8 +257,16 @@ module.exports={
         db.query(sql,data,(err)=>{
             if(err)return res.status(500).send({message:err.message})
             
-            sql=`select * from Users where  id=${db.escape(userId)}`
+            sql=`select * from cart c
+            join users u
+            on u.id = c.UserId
+            join products p 
+            on p.id = c.ProductId
+            where c.UserId =${db.escape(userId)}`
             db.query(sql,(err,dataUser)=>{
+                console.log(userId)
+                console.log(dataUser, ' ini alamat baru')
+                // console.log('berhasil update alamat baru')
                 if(err) return res.status(500).send({message:err.message})
                 return res.send(dataUser)
             })

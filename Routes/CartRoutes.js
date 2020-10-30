@@ -13,5 +13,5 @@ Router.post('/addTransactDetail/:id',CartControllers.transactionDetails)
 Router.delete('/deleteCartTransact/:id',CartControllers.deleteTransactionCart)
 Router.post('/updateQtyCart', CartControllers.updateQty)
 Router.post('/changeAddress',CartControllers.changeAddress)
-
+Router.post('/changePhone',CartControllers.changePhone)
 module.exports=Router

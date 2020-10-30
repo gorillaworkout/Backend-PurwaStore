@@ -70,7 +70,12 @@ module.exports={
                 console.log(err)
                 return res.status(500).send(err)
             }
-            if(!datausers.length) return res.status(500).send({message: 'user tidak terdaftar'})
+            if(!datausers.length){
+                alert('User tidak terdaftar')
+                return res.status(500).send({message: 'user tidak terdaftar'})
+            } 
+            
+                
             sql = `
             select * from cart c
             join users u
