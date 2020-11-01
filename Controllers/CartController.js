@@ -272,6 +272,71 @@ module.exports={
             })
             
         })
+    },
+    plusQty:(req,res)=>{
+        const {userId}=req.body
+        console.log(userId)
+        let sql = `update Cart
+        SET Qty=(Qty+1)
+        where UserId = ${db.escape(userId)}; `
+
+        db.query(sql,(err,dataResult)=>{
+            console.log(userId)
+            if(err) return res.status(500).send({message:err.message})
+            sql=`select * from cart c
+            join users u
+            on u.id = c.UserId
+            join products p 
+            on p.id = c.ProductId
+            where c.UserId = ${db.escape(userId)}`
+            db.query(sql,(err,allData)=>{
+                console.log('berhasil masuk ke allgetdata')
+                if(err) return res.status(500).send({message:err.message})
+                return res.send(allData)
+            })
+        })
+    },
+    minusQty:(req,res)=>{
+        const {userId}=req.body
+        console.log(userId)
+        let sql=`update Cart
+        SET Qty=(Qty-1)
+        where UserId = ${db.escape(userId)};`
+
+        db.query(sql,(err,dataResult)=>{
+            console.log(userId)
+            if(err) return res.status(500).send({message:err.message})
+            sql=`select * from cart c
+            join users u
+            on u.id = c.UserId
+            join products p 
+            on p.id = c.ProductId
+            where c.UserId = ${db.escape(userId)}`
+                db.query(sql,(err,allData)=>{
+                    console.log('berhasil masuk ke allgetdata')
+                    if(err) return res.status(500).send({message:err.message})
+                    return res.send(allData)
+                })
+            })
+    },
+    deleteQty:(req,res)=>{
+            const {userId}=req.body
+            console.log(userId)
+            let sql=`delete from Cart where UserId=${db.escape(userId)}`
+            db.query(sql,(err,dataResult)=>{
+                if(err)return res.status(500).send({message:err.message})
+                sql=`select * from cart c
+                join users u
+                on u.id = c.UserId
+                join products p 
+                on p.id = c.ProductId
+                where c.UserId = ${db.escape(userId)}`
+                    db.query(sql,(err,allData)=>{
+                        console.log('berhasil delete')
+                        if(err) return res.status(500).send({message:err.message})
+                        return res.send(allData)
+                    })
+            })
     }
     
 
