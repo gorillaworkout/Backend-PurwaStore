@@ -337,6 +337,23 @@ module.exports={
                         return res.send(allData)
                     })
             })
+    },
+    getAllKupon:(req,res)=>{
+        let sql=`select * from Kupon`
+        db.query(sql,(err,dataKupon)=>{
+            if (err) return res.status(500).send('error kupon')
+            return res.send(dataKupon)
+        })
+    },
+    getKuponByKupon:(req,res)=>{
+        const {Kupon}=req.body
+        let sql=`select * from Kupon 
+        where Kupon = ${db.escape(Kupon)};`
+        db.query(sql,(err,kupon)=>{
+            if(err) return res.status(500).send('error kupon')
+            console.log(Kupon,' ini req body')
+            return res.send(kupon)
+        })
     }
     
 
