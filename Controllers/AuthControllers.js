@@ -22,20 +22,22 @@ module.exports={
         const {username, email, password, namaLengkap} = req.body
         let sql = `select * from users where username = ?`
         db.query(sql, [username],(err, users)=>{
+            console.log(users, 'ini users')
             if(err) return res.status(500).send({message: 'server error'})
             if(users.length){
+                alert('username sudah ada')
                 return res.status(500).send({message: 'username sudah ada'})
             }else{
                 var data  = {username, email, password, namaLengkap}
                 sql = `insert into users set ?`
                 db.query(sql, data, (err, results)=>{
                     if(err) return res.status(500).send({message: 'server error'})
-
+                    console.log(results,' ini results')
                     console.log('berhasil post data users')
                     sql = `select * from users where id = ?`
                     db.query(sql, [results.insertId], (err, userslogin)=>{
                         if(err) return res.status(500).send({message: 'server error'})
-
+                        console.log(userslogin, 'ini userslogin')
                         const token = createJWToken({id:userslogin[0].id, username: userslogin[0].username})
                         const link = `http://localhost:3000/verified?token=${token}`
                         const htmlRender = fs.readFileSync('./Template/email.html', 'utf8')
@@ -68,7 +70,12 @@ module.exports={
                 console.log(err)
                 return res.status(500).send(err)
             }
-            if(!datausers.length) return res.status(500).send({message: 'user tidak terdaftar'})
+            if(!datausers.length){
+                alert('User tidak terdaftar')
+                return res.status(500).send({message: 'user tidak terdaftar'})
+            } 
+            
+                
             sql = `
             select * from cart c
             join users u
