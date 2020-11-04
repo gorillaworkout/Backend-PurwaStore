@@ -346,14 +346,81 @@ module.exports={
         })
     },
     getKuponByKupon:(req,res)=>{
-        const {Kupon}=req.body
+        const {Kupon,userId}=req.body
         let sql=`select * from Kupon 
         where Kupon = ${db.escape(Kupon)};`
         db.query(sql,(err,kupon)=>{
-            if(err) return res.status(500).send('error kupon')
-            console.log(Kupon,' ini req body')
-            return res.send(kupon)
+            if(kupon.length){
+                console.log(kupon,'ini kupon')
+                // console.log(RowDataPacket.idKupon,'ini RDP')
+                console.log(kupon[0].idKupon, ' ini id kupon 356')
+                console.log(kupon.idKupon)
+                if(err) return res.status(500).send(err)
+                console.log(Kupon,' ini req body')
+                sql=`update Cart set ? where UserId =${db.escape(userId)}`
+                dataUpdate={
+                    KuponCart:kupon[0].Description/100,
+                    idKupon:kupon[0].idKupon
+                 
+                }
+                console.log(dataUpdate.KuponCart)
+                db.query(sql,dataUpdate,(err,resultKupon)=>{
+                    // console.log(KuponCart)
+                    if(err) return res.status(500).send(err)
+                    console.log(resultKupon,'in iresult kupon')
+                    console.log('berhasil update')
+                    sql =`
+                    select * from cart c
+                    join users u
+                    on u.id = c.UserId
+                    join products p 
+                    on p.id = c.ProductId
+                    join Kupon k
+                    on k.idKupon = c.idKupon
+                    where c.UserId = ${userId}`
+                    db.query(sql,(err,finalResult)=>{
+                        if(err) return res.status(500).send('error lagi cok')
+                        return res.send(finalResult)
+                    })
+                    // return res.send(resultKupon)
+                })
+            }else {
+                return res.send('KUPON GAADA COK')
+            }
+            // console.log(kupon[0].Description/100)
+            // return res.send(kupon)
         })
+    },
+    deleteKupon:(req,res)=>{
+        const {userId}=req.body
+        let sql=`select * from Cart
+        where userId=2;`
+        db.query(sql,(err,resultuser)=>{
+            if(err) return res.status(500).send(err)
+            console.log(resultuser)
+            console.log(resultuser[0].id)
+
+            sql=`update Cart 
+            Set KuponCart=NULL,idKupon=NULL
+            where Cart.id=${db.escape(resultuser[0].id)}; `
+
+            db.query(sql,(err,updateKupon)=>{
+                if(err) return res.status(500).send(err)
+                sql=`select * from cart c
+                join users u
+                on u.id = c.UserId
+                join products p 
+                on p.id = c.ProductId
+                where c.UserId = ${userId}`
+                db.query(sql,(err,finalresult)=>{
+                    if(err)return res.status(500).send(err)
+                    console.log(finalresult)
+                    return res.send(finalresult)
+                })
+            })
+            
+        })
+
     }
     
 
