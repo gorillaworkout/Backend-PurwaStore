@@ -17,5 +17,9 @@ Router.post('/changePhone',CartControllers.changePhone)
 Router.post('/plusQty',CartControllers.plusQty)
 Router.post('/minusQty',CartControllers.minusQty)
 Router.post('/deleteQty',CartControllers.deleteQty)
+Router.get('/getAllKupon',CartControllers.getAllKupon)
+Router.post('/getKuponByKupon',CartControllers.getKuponByKupon)
+Router.post('/deleteKupon',CartControllers.deleteKupon)
+
 
 module.exports=Router
